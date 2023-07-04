@@ -22,5 +22,4 @@ int main() {
 	Car* cars = new Car[*SizeCars];
 	Sale* sales = new Sale[*SizeSales];
 
-	
 }
