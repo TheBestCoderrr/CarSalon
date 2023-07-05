@@ -5,46 +5,70 @@
 
 using namespace std;
 
-void PrintEmployersInfo(Employer* employers, int* size) {
-	for (int i = 0; i < *size; i++) {
-		cout << "Employer " << i + 1 << ": " << endl;
-		cout << "PIB: " << employers[i].firstname << ' ' << employers[i].lastname << ' ' << employers[i].surname << endl;
-		cout << "Position: " << employers[i].position << endl;
-		cout << "Contact: " << employers[i].contact << endl;
-		cout << "Email: " << employers[i].email << endl << endl;
+void PrintEmployersInfo(FILE* EmployersFile, Employer* employers, int i) {
+	fprintf(EmployersFile, "Employer %i:\n", i + 1);
+	fprintf(EmployersFile, "PIB: %s %s %s\n", employers[i].firstname, employers[i].lastname, employers[i].surname);
+	fprintf(EmployersFile, "Position: %s \n", employers[i].position);
+	fprintf(EmployersFile, "Contact: %s \n", employers[i].contact);
+	fprintf(EmployersFile, "Email: %s \n", employers[i].email);
+}
+
+void PrintCarsInfo(FILE* CarsFile, Car* cars, int i) {
+	fprintf(CarsFile, "Car %i:\n", i + 1);
+	fprintf(CarsFile, "Producer: %s\n", cars[i].producer);
+	fprintf(CarsFile, "Model: %s\n", cars[i].model);
+	fprintf(CarsFile, "Year production: %i\n", cars[i].YearProduction);
+	fprintf(CarsFile, "Price: %i\n", cars[i].price);
+	fprintf(CarsFile, "Potential price: %i\n", cars[i].PotentialPrice);
+}
+
+void PrintSalesInfo(FILE* SalesFile, Sale* sales, int i) {
+	fprintf(SalesFile, "Sale %i:\n Employer:\n", i + 1);
+	fprintf(SalesFile, "PIB: %s %s %s\n", sales[i].employer.firstname, sales[i].employer.lastname, sales[i].employer.surname);
+	fprintf(SalesFile, "Position: %s\n", sales[i].employer.position);
+	fprintf(SalesFile, "Contact: %s\n", sales[i].employer.position);
+	fprintf(SalesFile, "Email: %s\n Car:\n", sales[i].employer.email);
+	fprintf(SalesFile, "Producer: %s\n", sales[i].car.producer);
+	fprintf(SalesFile, "Model: %s\n", sales[i].car.model);
+	fprintf(SalesFile, "Year production: %i\n", sales[i].car.YearProduction);
+	fprintf(SalesFile, "Price: %i\n", sales[i].car.price);
+	fprintf(SalesFile, "Potential price: %i\n", sales[i].car.PotentialPrice);
+	fprintf(SalesFile, "Date(d/m/y): %i %i %i\n", sales[i].datesale.day, sales[i].datesale.month, sales[i].datesale.year);
+	fprintf(SalesFile, "Real price: %i\n", sales[i].RealPrice);
+}
+
+void PrintCertainDateSales(FILE* SalesFile, Sale* sales,const int* SizeSales, Date date) {
+	for (int i = 0; i < *SizeSales; i++) {
+		if (sales[i].datesale.day == date.day && sales[i].datesale.month == date.month && sales[i].datesale.year == date.year)
+			PrintSalesInfo(SalesFile, sales, i);
 	}
 }
 
-void PrintCarsInfo(Car* cars, int* size) {
-	for (int i = 0; i < *size; i++) {
-		cout << "Car " << i+1 <<": " << endl;
-		cout << "Producer: " << cars[i].producer << endl;
-		cout << "Model: " << cars[i].model << endl;
-		cout << "Year production: " << cars[i].YearProduction << endl;
-		cout << "Price: " << cars[i].price << endl;
-		cout << "Potential price: " << cars[i].PotentialPrice << endl << endl;
+void PrintPeriodDateSales(FILE* SalesFile, Sale* sales,const int* SizeSales, Date firstdate, Date lastdate) {
+	for (int i = 0; i < *SizeSales; i++) {
+		if (sales[i].datesale.day >= firstdate.day && sales[i].datesale.month >= firstdate.month && sales[i].datesale.year >= firstdate.year 
+			&& sales[i].datesale.day <= lastdate.day && sales[i].datesale.month <= lastdate.month && sales[i].datesale.year <= lastdate.year)
+			PrintSalesInfo(SalesFile, sales, i);
 	}
 }
 
-void PrintSalesInfo(Sale* sales, int* size) {
-	for (int i = 0; i < *size; i++) {
-		cout << "Sale " << i + 1 << ": " << endl;
+void PrintSalesCertainEmployer(FILE* SalesFile, Sale* sales, const int* SizeSales, Employer& useremployer) {
+	for (int i = 0; i < *SizeSales; i++) {
+		if(strcmp(useremployer.firstname, sales[i].employer.firstname) == 0 && 
+			strcmp(useremployer.lastname, sales[i].employer.lastname) == 0 && 
+			strcmp(useremployer.surname, sales[i].employer.surname) == 0)
+			PrintSalesInfo(SalesFile, sales, i);
+	}
+}
 
-		cout << "Employer " << i + 1 << ": " << endl;
-		cout << "PIB: " << sales[i].employer.firstname << ' ' << sales[i].employer.lastname << ' ' << sales[i].employer.surname << endl;
-		cout << "Position: " << sales[i].employer.position << endl;
-		cout << "Contact: " << sales[i].employer.contact << endl;
-		cout << "Email: " << sales[i].employer.email << endl;
-
-		cout << "Car " << i + 1 << ": " << endl;
-		cout << "Producer: " << sales[i].car.producer << endl;
-		cout << "Model: " << sales[i].car.model << endl;
-		cout << "Year production: " << sales[i].car.YearProduction << endl;
-		cout << "Price: " << sales[i].car.price << endl;
-		cout << "Potential price: " << sales[i].car.PotentialPrice << endl;
-
-		cout << "Date(d/m/y): ";
-		cout << sales[i].datesale.day << ' ' << sales[i].datesale.month<< ' ' << sales[i].datesale.year << endl;
-		cout << "Real price: " << sales[i].RealPrice << endl << endl;
+void PrintMostSalesCar(Sale* sales, const int* SizeSales, Date firstdate, Date lastdate) {
+	char modelcar[TEXTSIZE];
+	char modelcar2[TEXTSIZE];
+	for (int i = 0; i < *SizeSales - 1; i++) {
+		if (sales[i].datesale.day >= firstdate.day && sales[i].datesale.month >= firstdate.month && sales[i].datesale.year >= firstdate.year
+			&& sales[i].datesale.day <= lastdate.day && sales[i].datesale.month <= lastdate.month && sales[i].datesale.year <= lastdate.year) {
+			strcpy_s(modelcar, sales[i].car.model);
+			strcpy_s(modelcar2, sales[i + 1].car.model);
+		}	
 	}
 }

@@ -3,6 +3,8 @@
 #include "Employer.h"
 #include "Consts.h"
 
+#include "PrintInfo.h"
+
 using namespace std;
 
 void CopyEmployer(FILE* EmployerFile, Employer* employers, int i) {
@@ -57,4 +59,13 @@ void DeleteEmployer(Employer* employers, int* size, int index) {
 	for (int i = index; i < *size - 1; i++)
 		employers[i] = employers[i + 1];
 	*size -= 1;
+}
+
+void SaveEmployerFile(FILE* EmployerFile, Employer* employers, const int* size) {
+	EmployerFile = fopen("G:\\Text\\CarSalon\\Employers.txt", "w");
+	if (EmployerFile != NULL) {
+		for (int i = 0; i < *size; i++)
+			PrintEmployersInfo(EmployerFile, employers, i);
+		fclose(EmployerFile);
+	}
 }
