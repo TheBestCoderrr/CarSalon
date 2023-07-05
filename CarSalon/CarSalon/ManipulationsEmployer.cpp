@@ -61,11 +61,11 @@ void DeleteEmployer(Employer* employers, int* size, int index) {
 	*size -= 1;
 }
 
-void SaveEmployerFile(FILE* EmployerFile, Employer* employers, const int* size) {
+void SaveEmployerFile(FILE* EmployerFile, Employer* employers, const int* SIZE) {
 	EmployerFile = fopen("G:\\Text\\CarSalon\\Employers.txt", "w");
 	if (EmployerFile != NULL) {
-		for (int i = 0; i < *size; i++)
-			PrintEmployersInfo(EmployerFile, employers, i);
+		for (int i = 0; i < *SIZE; i++)
+			PrintEmployerInfo(EmployerFile, employers, i);
 		fclose(EmployerFile);
 	}
 }

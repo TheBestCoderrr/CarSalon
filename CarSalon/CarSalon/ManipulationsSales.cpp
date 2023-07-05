@@ -5,6 +5,7 @@
 
 #include "ManipulationsEmployer.h"
 #include "ManipulationsCar.h"
+#include "PrintInfo.h"
 
 using namespace std;
 
@@ -129,4 +130,13 @@ int FindSum(Sale* sales, const int* SizeSales, Date firstdate, Date lastdate) {
 		}	
 	}
 	return Sum;
+}
+
+void SaveSaleFile(FILE* SalesFile, Sale* sales, const int* SIZE) {
+	SalesFile = fopen("G:\\Text\\CarSalon\\Sales.txt", "w");
+	if (SalesFile != NULL) {
+		for (int i = 0; i < *SIZE; i++)
+			PrintSaleInfo(SalesFile, sales, i);
+		fclose(SalesFile);
+	}
 }

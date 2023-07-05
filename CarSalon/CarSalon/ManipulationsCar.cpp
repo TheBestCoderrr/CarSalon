@@ -2,7 +2,7 @@
 #include <string.h>
 #include "Car.h"
 #include "Consts.h"
-
+#include "PrintInfo.h"
 using namespace std;
 
 void CopyCar(FILE* CarFile, Car* cars, int i) {
@@ -67,4 +67,13 @@ void DeleteCar(Car* cars, int* size, int index) {
 	for (int i = index; i < *size - 1; i++)
 		cars[i] = cars[i + 1];
 	*size -= 1;
+}
+
+void SaveCarFile(FILE* CarFile, Car* cars, const int* SIZE) {
+	CarFile = fopen("G:\\Text\\CarSalon\\Cars.txt", "w");
+	if (CarFile != NULL) {
+		for (int i = 0; i < *SIZE; i++)
+			PrintCarInfo(CarFile, cars, i);
+		fclose(CarFile);
+	}
 }

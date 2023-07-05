@@ -22,4 +22,6 @@ int main() {
 	Employer* employers = new Employer[*SizeEmployers];
 	Car* cars = new Car[*SizeCars];
 	Sale* sales = new Sale[*SizeSales];
+
+	delete[] employers, cars, sales;
 }
