@@ -56,5 +56,8 @@
     <ClInclude Include="ManipulationsSales.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="PrintInfo.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

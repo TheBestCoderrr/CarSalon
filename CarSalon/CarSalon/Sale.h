@@ -4,7 +4,7 @@
 #include "Date.h"
 
 struct Sale {
-	Employer employee;
+	Employer employer;
 	Car car;
 	Date datesale;
 	int RealPrice;

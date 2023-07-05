@@ -20,7 +20,7 @@ void AddSale(Sale* sales, int* SizeSales, Employer* employers, int* SizeEmployer
 	int CarIndex) {
 	*SizeSales += 1;
 
-	sales[*SizeSales - 1].employee = employers[ImployerIndex];
+	sales[*SizeSales - 1].employer = employers[ImployerIndex];
 	DeleteEmployer(employers, SizeEmployers, ImployerIndex);
 	sales[*SizeSales - 1].car = cars[CarIndex];
 	DeleteCar(cars, SizeCars, CarIndex);

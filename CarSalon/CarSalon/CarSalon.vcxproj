@@ -141,6 +141,7 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="Employer.h" />
     <ClInclude Include="ManipulationsSales.h" />
+    <ClInclude Include="PrintInfo.h" />
     <ClInclude Include="Sale.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

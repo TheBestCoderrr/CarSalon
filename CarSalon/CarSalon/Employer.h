@@ -5,6 +5,6 @@ struct Employer {
 	char lastname[TEXTSIZE];
 	char surname[TEXTSIZE];
 	char position[TEXTSIZE];
-	int contact;
+	char contact[TEXTSIZE];
 	char email[TEXTSIZE];
 };
