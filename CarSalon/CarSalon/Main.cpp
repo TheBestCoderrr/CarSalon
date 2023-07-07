@@ -88,6 +88,7 @@ int main() {
 							carsmodels[*countmodels - 1] = new char[TEXTSIZE];
 							strcpy_s(carsmodels[*countmodels - 1], TEXTSIZE, cars[*SizeCars - 1].model);
 						}
+						break;
 					default:
 						cout << "Invalid variant!" << endl;
 						break;
@@ -118,6 +119,7 @@ int main() {
 						break;
 					case 2:
 						if (*SizeCars > 0) {
+							cin.ignore();
 							cout << "Enter model:";
 							cin.getline(car.model, TEXTSIZE);
 							CarIndex = FindCarIndex(cars, *SizeCars, car);
@@ -131,6 +133,7 @@ int main() {
 						break;
 					case 3:
 						if (*SizeSales > 0) {
+							cin.ignore();
 							cout << "Enter model:";
 							cin.getline(sale.car.model, TEXTSIZE);
 							SaleIndex = FindSaleIndex(sales, *SizeCars, sale);
@@ -149,7 +152,7 @@ int main() {
 				break;
 			case 3:
 				cout << "0 - cancel;\n1 - print employers;\n2 - print cars;\n3 - print sales;\n4 - print sales certain date;\n" <<
-					"5 - print sales period date;\n6 - print sales individual employer;" << endl;
+					"5 - print sales period date;\n6 - print sales individual employer;\n7 - print most sale car;\n8 - print succsessful employer\n9 - print sum;" << endl;
 				cout << "Enter variant(print):";
 				cin >> UserVariant;
 				switch (UserVariant) {
