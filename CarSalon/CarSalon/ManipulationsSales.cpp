@@ -99,20 +99,19 @@ int FindSaleIndex(Sale* sales, const int SIZE, Sale& sale) {
 	return -1;
 }
 
-void AddSale(Sale* sales, int* SizeSales, Employer* employers, int* SizeEmployers, Car* cars , int* SizeCars, int ImployerIndex, 
-	int CarIndex) {
+void AddSale(Sale* sales, int* SizeSales, Employer* employers, int* SizeEmployers, Car* cars , int* SizeCars, int EmployerIndex, 
+	int CarIndex, int UserPrice) {
 	*SizeSales += 1;
 
-	sales[*SizeSales - 1].employer = employers[ImployerIndex];
-	DeleteEmployer(employers, SizeEmployers, ImployerIndex);
+	sales[*SizeSales - 1].employer = employers[EmployerIndex];
+	DeleteEmployer(employers, SizeEmployers, EmployerIndex);
 	sales[*SizeSales - 1].car = cars[CarIndex];
 	DeleteCar(cars, SizeCars, CarIndex);
 	cout << "Enter Date(d/m/y): ";
 	cin >> sales[*SizeSales - 1].datesale.day;
 	cin >> sales[*SizeSales - 1].datesale.month;
 	cin >> sales[*SizeSales - 1].datesale.year;
-	cout << "Enter real price: ";
-	cin >> sales[*SizeSales - 1].RealPrice;
+	sales[*SizeSales - 1].RealPrice = UserPrice;
 }
 
 void DeleteSale(Sale* sales, int* size, int index) {
@@ -133,10 +132,6 @@ int FindSum(Sale* sales, const int* SizeSales, Date firstdate, Date lastdate) {
 }
 
 void SaveSaleFile(FILE* SalesFile, Sale* sales, const int* SIZE) {
-	SalesFile = fopen("G:\\Text\\CarSalon\\Sales.txt", "w");
-	if (SalesFile != NULL) {
-		for (int i = 0; i < *SIZE; i++)
-			PrintSaleInfo(SalesFile, sales, i);
-		fclose(SalesFile);
-	}
+	for (int i = 0; i < *SIZE; i++)
+		PrintSaleInfo(SalesFile, sales, i);
 }

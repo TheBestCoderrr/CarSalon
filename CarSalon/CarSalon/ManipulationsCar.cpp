@@ -42,7 +42,7 @@ void CopyCar(FILE* CarFile, Car* cars, int i) {
 
 int FindCarIndex(Car* cars, const int SIZE, Car& car) {
 	for (int i = 0; i < SIZE; i++) {
-		if (strcmp(cars[i].producer, car.producer) == 0)
+		if (strcmp(cars[i].model, car.model) == 0)
 			return i;
 	}
 	return -1;
@@ -50,11 +50,12 @@ int FindCarIndex(Car* cars, const int SIZE, Car& car) {
 
 void AddCar(Car* cars, int* size) {
 	*size += 1;
-
+	cin.ignore();
 	cout << "Enter producer: ";
 	cin.getline(cars[*size - 1].producer, TEXTSIZE);
 	cout << "Enter year production: ";
 	cin >> cars[*size - 1].YearProduction;
+	cin.ignore();
 	cout << "Enter model: ";
 	cin.getline(cars[*size - 1].model, TEXTSIZE);
 	cout << "Enter price: ";
@@ -70,10 +71,6 @@ void DeleteCar(Car* cars, int* size, int index) {
 }
 
 void SaveCarFile(FILE* CarFile, Car* cars, const int* SIZE) {
-	CarFile = fopen("G:\\Text\\CarSalon\\Cars.txt", "w");
-	if (CarFile != NULL) {
-		for (int i = 0; i < *SIZE; i++)
+	for (int i = 0; i < *SIZE; i++)
 			PrintCarInfo(CarFile, cars, i);
-		fclose(CarFile);
-	}
 }

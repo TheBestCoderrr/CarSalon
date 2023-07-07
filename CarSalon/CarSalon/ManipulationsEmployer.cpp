@@ -40,7 +40,7 @@ int FindEmployerIndex(Employer* employers, const int SIZE, Employer& employer) {
 
 void AddEmployer(Employer* employers, int* size) {
 	*size += 1;
-	
+	cin.ignore();
 	cout << "Enter first name: ";
 	cin.getline(employers[*size - 1].firstname, TEXTSIZE);
 	cout << "Enter last name: ";
@@ -62,10 +62,6 @@ void DeleteEmployer(Employer* employers, int* size, int index) {
 }
 
 void SaveEmployerFile(FILE* EmployerFile, Employer* employers, const int* SIZE) {
-	EmployerFile = fopen("G:\\Text\\CarSalon\\Employers.txt", "w");
-	if (EmployerFile != NULL) {
-		for (int i = 0; i < *SIZE; i++)
-			PrintEmployerInfo(EmployerFile, employers, i);
-		fclose(EmployerFile);
-	}
+	for (int i = 0; i < *SIZE; i++)
+		PrintEmployerInfo(EmployerFile, employers, i);
 }

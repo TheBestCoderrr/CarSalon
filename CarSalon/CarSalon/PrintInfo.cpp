@@ -52,7 +52,7 @@ void PrintPeriodDateSales(FILE* SalesFile, Sale* sales,const int* SizeSales, Dat
 	}
 }
 
-void PrintSalesCertainEmployer(FILE* SalesFile, Sale* sales, const int* SizeSales, Employer& useremployer) {
+void PrintSalesIndividualEmployer(FILE* SalesFile, Sale* sales, const int* SizeSales, Employer& useremployer) {
 	for (int i = 0; i < *SizeSales; i++) {
 		if(strcmp(useremployer.firstname, sales[i].employer.firstname) == 0 && 
 			strcmp(useremployer.lastname, sales[i].employer.lastname) == 0 && 
@@ -61,14 +61,60 @@ void PrintSalesCertainEmployer(FILE* SalesFile, Sale* sales, const int* SizeSale
 	}
 }
 
-void PrintMostSalesCar(Sale* sales, const int* SizeSales, Date firstdate, Date lastdate) {
-	char modelcar[TEXTSIZE];
-	char modelcar2[TEXTSIZE];
-	for (int i = 0; i < *SizeSales - 1; i++) {
+void PrintMostSalesCar(Sale* sales, const int* SizeSales, Date firstdate, Date lastdate, char** carsmodels, const int* countmodels) {
+	int* MaxCountModels = new int[*countmodels];
+	for (int i = 0; i < *countmodels; i++)
+		MaxCountModels[i] = 0;
+
+	for (int i = 0; i < *SizeSales; i++) {
 		if (sales[i].datesale.day >= firstdate.day && sales[i].datesale.month >= firstdate.month && sales[i].datesale.year >= firstdate.year
 			&& sales[i].datesale.day <= lastdate.day && sales[i].datesale.month <= lastdate.month && sales[i].datesale.year <= lastdate.year) {
-			strcpy_s(modelcar, sales[i].car.model);
-			strcpy_s(modelcar2, sales[i + 1].car.model);
+			for (int j = 0; j < *countmodels; j++) {
+				if (strcmp(carsmodels[j], sales[i].car.model) == 0)
+					MaxCountModels[i] += 1;
+			}
 		}	
 	}
+	int max = MaxCountModels[0], imax = 0;
+	for (int i = 1; i < *countmodels; i++) {
+		if (max < MaxCountModels[i]) {
+			max = MaxCountModels[i];
+			imax = i;
+		}
+	}
+
+	cout << "Most sale car: " << sales[imax].car.model;
+
+	delete[] MaxCountModels;
+}
+
+void PrintMostSuccessfulSeller(Sale* sales, const int* SizeSales, Employer* employers,const int* SizeEmployers,Date firstdate, 
+	Date lastdate) {
+	int* MaxSalesEmployer = new int[*SizeEmployers];
+	for (int i = 0; i < *SizeEmployers; i++)
+		MaxSalesEmployer[i] = 0;
+
+	for (int i = 0; i < *SizeEmployers; i++) {
+		for (int j = 0; j < *SizeSales; j++) {
+			if (sales[j].datesale.day >= firstdate.day && sales[j].datesale.month >= firstdate.month && sales[j].datesale.year >= firstdate.year
+				&& sales[j].datesale.day <= lastdate.day && sales[j].datesale.month <= lastdate.month && sales[j].datesale.year <= lastdate.year) {
+				if (strcmp(employers[i].firstname, sales[j].employer.firstname) == 0 && strcmp(employers[i].lastname, sales[j].employer.lastname) == 0 &&
+					strcmp(employers[i].surname, sales[j].employer.surname) == 0) {
+					MaxSalesEmployer[i] += 1;
+				}
+			}
+		}
+	}
+
+	int max = MaxSalesEmployer[0], imax = 0;
+	for (int i = 1; i < *SizeEmployers; i++) {
+		if (max < MaxSalesEmployer[i]) {
+			max = MaxSalesEmployer[i];
+			imax = i;
+		}
+	}
+
+	cout << "Most sale car: " << sales[imax].car.model;
+
+	delete[] MaxSalesEmployer;
 }
